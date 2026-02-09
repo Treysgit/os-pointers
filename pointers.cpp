@@ -23,6 +23,7 @@ int main(int argc, char **argv)
     // Call `CalculateStudentAverage(???, ???)`
     // Output `average`
 
+    // TESTING COMMIT ON GITHUB
     // Send args to prompt function. With proper max and min
     student.id = promptInt("Please enter the student's id number: ", 0, 999999999);
     std::cout << "\n";
