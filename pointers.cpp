@@ -20,9 +20,35 @@ int main(int argc, char **argv)
     double average;
 
     // Sequence of user input -> store in fields of `student`
-
     // Call `CalculateStudentAverage(???, ???)`
     // Output `average`
+
+    // Send args to prompt function. With proper max and min
+    student.id = promptInt("Please enter the student's id number: ", 0, 999999999);
+    std::cout << "\n";
+
+    // Since we can assume the first and last name are <128 chars, we can
+    // declare char array sizes
+    student.f_name = new char[127];
+    student.l_name = new char[127];
+
+    std::cout << "Please enter the student's first name: ";
+    std::cin >> student.f_name;
+    std::cout << "\n";
+
+    std::cout << "Please enter the student's last name: ";
+    std::cin >> student.l_name;
+     std::cout << "\n";
+
+    // Send args to prompt function. With proper max and min
+    
+
+
+
+
+
+
+
 
     return 0;
 }
@@ -35,6 +61,18 @@ int main(int argc, char **argv)
 int promptInt(std::string message, int min, int max)
 {
     // Code to prompt user for an int
+    int userVal;
+    std::cout << message; // display prompt
+    std::cin >> userVal; // store user's value
+
+    //sanity check -- out of bounds
+    while ((userVal < min) || (userVal > max)){
+        std::cout << message; // prompt user again
+        std::cin >> userVal; // store user's value again
+    }
+    return userVal; 
+
+    
 }
 
 /*
