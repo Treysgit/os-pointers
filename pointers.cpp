@@ -42,6 +42,8 @@ int main(int argc, char **argv)
      std::cout << "\n";
 
     // Send args to prompt function. With proper max and min
+    student.n_assignments = promptInt("Please enter how many assignments were graded: ", 1, 134217728)
+    std::cout << "\n";
     
 
 
@@ -84,6 +86,17 @@ int promptInt(std::string message, int min, int max)
 double promptDouble(std::string message, double min, double max)
 {
     // Code to prompt user for a double
+    double userVal;
+    std::cout << message; // display prompt
+    std::cin >> userVal; // store user's value
+
+    //sanity check -- out of bounds
+    while ((userVal < min) || (userVal > max)){
+        std::cout << message; // prompt user again
+        std::cin >> userVal; // store user's value again
+    }
+    return userVal; 
+
 }
 
 /*
