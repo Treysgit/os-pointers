@@ -26,7 +26,6 @@ int main(int argc, char **argv)
 
     // Send args to prompt function. With proper max and min
     student.id = promptInt("Please enter the student's id number: ", 0, 999999999);
-    std::cin.ignore(); // clear extra '\n'
 
     // Since we can assume the first and last name are <128 chars, we can
     // declare char array sizes
@@ -40,8 +39,7 @@ int main(int argc, char **argv)
     std::cin.getline(student.l_name, 128);
 
     // Send args to prompt function. With proper max and min
-    student.n_assignments = promptInt("Please enter how many assignments were graded: ", 1, 134217728);
-    std::cout << "\n";
+    student.n_assignments = promptInt("Please enter how many assignments were graded: ", 1, 134217727);
     
     // Dynamically allocate memory for array of grades
     student.grades = new double[student.n_assignments];
@@ -84,15 +82,31 @@ int promptInt(std::string message, int min, int max)
 {
     // Code to prompt user for an int
     int userVal;
-    std::cout << message; // display prompt
-    std::cin >> userVal; // store user's value
 
-    //sanity check -- out of bounds
-    while ((userVal < min) || (userVal > max)){
-        std::cout << message; // prompt user again
-        std::cin >> userVal; // store user's value again
+    while(true){
+        std::cout << message; // initial prompt
+
+        // check if type is correct 
+        if(!(std::cin >> userVal)){
+            std::cout << "Sorry, I cannot understand your answer" << std::endl;
+            std::cin.clear(); // allow cin to read input again (fail state)
+            std::cin.ignore(1000000, '\n'); //clear input buffer
+            continue; // Jump back to the top of loop
+        }
+        if((userVal < min) || (userVal > max)){
+            std::cout << "Sorry, I cannot understand your answer" << std::endl;
+            std::cin.ignore(1000000, '\n'); //clear input buffer
+            continue; //jump back to top
+        }
+
+        // since '123ABC' would accept '123' in 'cin >> userVal', we must clear 'ABC' -- not just \n
+        std::cin.ignore(1000000, '\n'); 
+        return userVal;
+
+        
+
+
     }
-    return userVal; 
 
     
 }
@@ -106,15 +120,31 @@ double promptDouble(std::string message, double min, double max)
 {
     // Code to prompt user for a double
     double userVal;
-    std::cout << message; // display prompt
-    std::cin >> userVal; // store user's value
+    while(true){
+        std::cout << message; // initial prompt
 
-    //sanity check -- out of bounds
-    while ((userVal < min) || (userVal > max)){
-        std::cout << message; // prompt user again
-        std::cin >> userVal; // store user's value again
+        // check if type is correct 
+        if(!(std::cin >> userVal)){
+            std::cout << "Sorry, I cannot understand your answer" << std::endl;
+            std::cin.clear(); // allow cin to read input again (fail state)
+            std::cin.ignore(1000000, '\n'); //clear input buffer
+            continue; // Jump back to the top of loop
+        }
+        if((userVal < min) || (userVal > max)){
+            std::cout << "Sorry, I cannot understand your answer" << std::endl;
+            std::cin.ignore(1000000, '\n'); //clear input buffer
+            continue; //jump back to top
+        }
+
+        // since '123ABC' would accept '123' in 'cin >> userVal', we must clear 'ABC' -- not just \n
+        std::cin.ignore(1000000, '\n'); 
+        return userVal;
+
+        
+
+
     }
-    return userVal; 
+
 
 }
 
