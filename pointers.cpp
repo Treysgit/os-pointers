@@ -93,14 +93,27 @@ int promptInt(std::string message, int min, int max)
             std::cin.ignore(1000000, '\n'); //clear input buffer
             continue; // Jump back to the top of loop
         }
+        char nextChar = std::cin.peek();
+        // check if nextChar is a space or tab. Skip and grab the subsequent char
+        while((nextChar == ' ')||(nextChar == '\t')){
+            std::cin.get(); //consume the left over space/tab
+            nextChar = std::cin.peek(); //store the next char and repeat if tab/space
+
+        }
+        // if user entered "123ABC\n" --> 'A' is not \n
+        if(nextChar != '\n'){
+            std::cout << "Sorry, I cannot understand your answer" << std::endl;
+            std::cin.ignore(1000000, '\n');
+            continue;
+        }
         if((userVal < min) || (userVal > max)){
             std::cout << "Sorry, I cannot understand your answer" << std::endl;
             std::cin.ignore(1000000, '\n'); //clear input buffer
             continue; //jump back to top
         }
 
-        // since '123ABC' would accept '123' in 'cin >> userVal', we must clear 'ABC' -- not just \n
-        std::cin.ignore(1000000, '\n'); 
+        // clear trailing \n
+        std::cin.ignore(); 
         return userVal;
 
         
@@ -130,14 +143,27 @@ double promptDouble(std::string message, double min, double max)
             std::cin.ignore(1000000, '\n'); //clear input buffer
             continue; // Jump back to the top of loop
         }
+        char nextChar = std::cin.peek();
+        // check if nextChar is a space or tab. Skip and grab the subsequent char
+        while((nextChar == ' ')||(nextChar == '\t')){
+            std::cin.get(); //consume the left over space/tab
+            nextChar = std::cin.peek(); //store the next char and repeat if tab/space
+
+        }
+        // if user entered "12.93ABC\n" --> 'A' is not \n
+        if(nextChar != '\n'){
+            std::cout << "Sorry, I cannot understand your answer" << std::endl;
+            std::cin.ignore(1000000, '\n');
+            continue;
+        }
         if((userVal < min) || (userVal > max)){
             std::cout << "Sorry, I cannot understand your answer" << std::endl;
             std::cin.ignore(1000000, '\n'); //clear input buffer
             continue; //jump back to top
         }
 
-        // since '123ABC' would accept '123' in 'cin >> userVal', we must clear 'ABC' -- not just \n
-        std::cin.ignore(1000000, '\n'); 
+        // clear trailing \n
+        std::cin.ignore(); 
         return userVal;
 
         
